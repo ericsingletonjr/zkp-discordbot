@@ -1,7 +1,7 @@
 import discord
-import usersecrets
+import os
 
-keys = usersecrets.SecretStore
+token = os.environ.get('TOKEN')
 
 client = discord.Client()
 
@@ -22,4 +22,4 @@ async def on_ready():
     print('------')
     await client.change_presence(activity=discord.Game(name="broken af right"))
 
-client.run(keys.TOKEN)
+client.run(token)
