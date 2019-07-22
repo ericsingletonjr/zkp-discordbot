@@ -33,7 +33,7 @@ sheet = gClient.open('Deja Vu').sheet1
 sheet2 = gClient.open('Deja Vu Backend').sheet1
 list_of_hashes = sheet.get_all_records()
 print(sheet.row_values(2))
-sheet.update_cell(2,3, "connected from heroku")
+#sheet.update_cell(2,3, "test from local build")
 print("-------")
 
 #=== MAIN PROGRAM ===
