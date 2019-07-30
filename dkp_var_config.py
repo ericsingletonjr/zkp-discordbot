@@ -1,7 +1,5 @@
 # This DKP class is to store all the need variables for our
 # DKP algorithm to be used in the various commands
-import os
-import json
 import gspread
 
 class DKP_Vars:
