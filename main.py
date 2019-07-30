@@ -1,26 +1,34 @@
-#=== IMPORT SECTION ===
+#=== import modules ===
 import os
 import json
 from gDrive_setup import creds
+from dkp_var_config import DKP_Vars
 
 import gspread
 import discord
 
-#=== CLIENT SETUPS ===
+#=== client setup ===
 token = os.environ.get('TOKEN')
 
 gClient = gspread.authorize(creds)
 dClient = discord.Client()
 
+#=== object setup ===
+dkp_variables = DKP_Vars(gClient)
+print("--------")
+print("=== DKP VARIABLES LOADED ===")
+
 #test connection
-sheet = gClient.open('Deja Vu').sheet1
-sheet2 = gClient.open('Deja Vu Backend').sheet1
-list_of_hashes = sheet.get_all_records()
-print(sheet.row_values(2))
+#sheet = gClient.open('Deja Vu').sheet1
+#BackendSheet = gClient.open('Deja Vu Backend')
+#DKP_sheet = BackendSheet.worksheet("Variables and Formula")
+
+#list_of_hashes = sheet.get_all_records()
+#print(DKP_sheet.acell('A2').value)
 #sheet.update_cell(2,3, "test from local build")
 print("-------")
 
-#=== MAIN PROGRAM ===
+#=== main program ===
 @dClient.event
 async def on_message(message):
     if message.author == dClient.user:
