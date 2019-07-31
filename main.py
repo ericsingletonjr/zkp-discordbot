@@ -49,6 +49,20 @@ async def on_message(message):
         print(SheetCommands.PlayerTable.keys())
         msg = msg.format(message)
         await message.channel.send(msg)
+    if message.content.startswith("!refresh"):
+        msg = 'Refreshing...'.format(message)
+        await message.channel.send(msg)
+        SheetCommands.Refresh()
+    if message.content.startswith('!tithe'):
+        author = str(message.author)
+        if author == 'Centproc (cp_r)#7394' or author == 'Chief Secretary Zuhayr#4713':
+            msg = SheetCommands.Tithe().format(message)
+            await message.channel.send(msg)
+        else:
+            msg = 'Looks like it'.format(message)
+            await message.channel.send(msg)
+
+
 
 @dClient.event
 async def on_ready():

@@ -8,9 +8,9 @@ class DKP_Vars:
         self.gClient = gClient
         print("=== SETTING UP DKP VARIABLES ===")
         DKPSheet = gClient.open("Deja Vu Backend").sheet1
-        self.Tithe = DKPSheet.acell("A1").value
-        self.AttendencePay = DKPSheet.acell("B1").value
-        self.MinBid = DKPSheet.acell("C1").value
+        self.Tithe = DKPSheet.acell("A2").value
+        self.AttendencePay = DKPSheet.acell("B2").value
+        self.MinBid = DKPSheet.acell("C2").value
         self.PerPlayerAmount = DKPSheet.acell("A5").value
         self.DKPScale = DKPSheet.acell("B5").value
         self.Bankcut = DKPSheet.acell("C5").value
