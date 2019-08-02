@@ -1,4 +1,4 @@
-
+﻿
 # Created by https://www.gitignore.io/api/node,linux,macos,python,windows,visualstudio,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,linux,macos,python,windows,visualstudio,visualstudiocode
 
@@ -633,5 +633,9 @@ MigrationBackup/
 
 # Hide python secrets
 [Uu]sersecrets.py
+
+#Auth Keys
+discord_token.json
+googleapi.json
 
 # End of https://www.gitignore.io/api/node,linux,macos,python,windows,visualstudio,visualstudiocode
