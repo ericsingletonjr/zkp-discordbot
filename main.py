@@ -1,6 +1,8 @@
 #=== import modules ===
 import os
 import json
+from dotenv import load_dotenv
+load_dotenv()
 from gDrive_setup import creds
 from dkp_var_config import DKP_Vars
 from gspread_commands import SheetQuery
@@ -9,7 +11,7 @@ import gspread
 import discord
 
 #=== client setup ===
-token = os.environ.get('TOKEN')
+token = os.getenv('TOKEN')
 
 gClient = gspread.authorize(creds)
 dClient = discord.Client()

@@ -6,16 +6,16 @@ import os
 from oauth2client.service_account import ServiceAccountCredentials
 
 gData = {
-    "type": os.environ.get('type'),
-    "project_id": os.environ.get('project_id'),
-    "private_key_id": os.environ.get('private_key_id'),
-    "private_key": os.environ.get('private_key'),
-    "client_email": os.environ.get('client_email'),
-    "client_id": os.environ.get('client_id'),
-    "auth_uri": os.environ.get('auth_uri'),
-    "token_uri": os.environ.get('token_uri'),
-    "auth_provider_x509_cert_url": os.environ.get('auth_provider_x509_cert_url'),
-    "client_x509_cert_url": os.environ.get('client_x509_cert_url')
+    "type": os.getenv('type'),
+    "project_id": os.getenv('project_id'),
+    "private_key_id": os.getenv('private_key_id'),
+    "private_key": os.getenv('private_key'),
+    "client_email": os.getenv('client_email'),
+    "client_id": os.getenv('client_id'),
+    "auth_uri": os.getenv('auth_uri'),
+    "token_uri": os.getenv('token_uri'),
+    "auth_provider_x509_cert_url": os.getenv('auth_provider_x509_cert_url'),
+    "client_x509_cert_url": os.getenv('client_x509_cert_url')
 }
 
 scope = ['https://spreadsheets.google.com/feeds',
