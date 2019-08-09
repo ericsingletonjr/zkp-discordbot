@@ -5,6 +5,10 @@
 import os
 from oauth2client.service_account import ServiceAccountCredentials
 
+# === discord token ===
+token = os.getenv('TOKEN')
+
+# === google sheets info ===
 gData = {
     "type": os.getenv('type'),
     "project_id": os.getenv('project_id'),
