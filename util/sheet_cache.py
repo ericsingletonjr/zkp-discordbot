@@ -40,6 +40,6 @@ class SheetCache:
         for lists in AllSheetData:
             self.PlayerTable.update({lists[1]: lists})
 
-        self.PlayerTable.pop('Discord ID')
-        self.OfficerTable.pop('Discord ID')
+        #self.PlayerTable.pop('Discord ID')
+        #self.OfficerTable.pop('Discord ID')
         #print(self.PlayerTable)

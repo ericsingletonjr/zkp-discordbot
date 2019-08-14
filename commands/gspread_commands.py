@@ -1,6 +1,7 @@
 # This class will be the store of our sheet functionality. All commands relating to google
 # sheet manipulation will live in here. Currently a simplified version
 import gspread
+import discord
 
 # --- TODO ---
 # Attendance will be a mix of a discord call and gsheets stuff
@@ -18,6 +19,7 @@ class SheetQuery:
     def __init__(self, gClient, sheetCache):
         self.gClient = gClient
         self.sheetCache = sheetCache
+        self.NewPlayerList = list()
     '''
     def __init__(self, gClient, dkpConfig):
         self.gClient = gClient
@@ -42,8 +44,10 @@ class SheetQuery:
         rowNum = 2
         pool = 0
         msg = ''
+        
 
         for key in self.sheetCache.PlayerTable:
+            if key == 'Discord ID': continue
             playerList = self.sheetCache.PlayerTable.get(key)
             dkpAmount = int(playerList[11])
             amount = int(dkpAmount*float(self.sheetCache.dkpConfig.Tithe))
@@ -64,6 +68,7 @@ class SheetQuery:
         msg += "Each player will receive: " + str(receive) + '\n'
 
         for key in self.sheetCache.PlayerTable:
+            if key == 'Discord ID': continue
             playerList = self.sheetCache.PlayerTable.get(key)
             dkpAmount = int(playerList[11])
 
@@ -87,6 +92,22 @@ class SheetQuery:
         #print(self.sheetCache.PlayerTable)
         return msg
 
+    def AddMember(self, discordID):
+        discordID = discordID.replace("\\", " ")
+        if self.sheetCache.PlayerTable.get(discordID) != None:
+            print("=== ENTRY EXISTS ALREADY ===")
+            return None
+        else:
+            print("=== NOT IN SHEET - CREATING NOW ===")
+            self.sheetCache.PlayerTable.update({ discordID: self.NewPlayerList})
+            rowNum = len(self.sheetCache.PlayerTable)
+            cell_range = self.sheetCache.GuildRoster.range('A'+str(rowNum+1)+':AD'+str(rowNum+1))
+            cell_range[1].value = discordID
+            self.sheetCache.GuildRoster.update_cells(cell_range)
+            row_list = self.sheetCache.GuildRoster.row_values(rowNum+1)
+            self.sheetCache.PlayerTable.update({ discordID: row_list})
+
+
     # Func for Aution. This will be used for item drops.
     # Will create an active auction object that will exist for
     # a period of time (or ended by officer). During that time, it will 
@@ -100,8 +121,8 @@ class SheetQuery:
     def CancelAuction(self, auctionObject):
         print("Canceled")
 
-    def simple(self, a ,b, c):
-        print(str(a + b + c)) 
+    def simple(self):
+        print(self.sheetCache.PlayerTable)
         
 
 

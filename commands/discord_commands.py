@@ -20,7 +20,8 @@ class DiscordCommands:
         # a more clean approach in the future
         self.CommandTable.update({"!refresh": [sheetCache.Refresh, True, 1]})
         self.CommandTable.update({"!tithe" : [sheetCommands.Tithe, True, 1]})
-        self.CommandTable.update({"!simple" : [sheetCommands.simple, True, 4]})
+        self.CommandTable.update({"!simple" : [sheetCommands.simple, True, 1]})
+        self.CommandTable.update({"!addmember" : [sheetCommands.AddMember, True, 2]})
         #self.CommandTable.update({"!cancelauction" : [sheetCommands.CancelAuction, True, 1]})
 
         
