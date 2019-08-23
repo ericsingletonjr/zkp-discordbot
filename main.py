@@ -8,6 +8,7 @@ from environment_setup import creds, token
 from commands.gspread_commands import SheetQuery
 from commands.discord_commands import DiscordCommands
 from util.sheet_cache import SheetCache
+from util.switches import statusCheck
 
 import gspread
 import discord
@@ -23,13 +24,15 @@ dClient = discord.Client()
 #print("--------")
 #print("=== DKP VARIABLES LOADED ===")
 sheetCache = SheetCache(gClient)
-SheetCommands = SheetQuery(gClient,sheetCache)
+SheetCommands = SheetQuery(gClient, dClient, sheetCache)
 # print("=== SHEET COMMANDS LOADED ===")
 botCommands = DiscordCommands(sheetCache,SheetCommands)
 print("-------")
 
-
 #=== main program ===
+
+# TODO: Probably need a message queue as well as
+# a way to divide this up more
 @dClient.event
 async def on_message(message):
     if message.author == dClient.user:
@@ -41,9 +44,9 @@ async def on_message(message):
     # message.content is just pure message, no other info
     # .author is discordID
 
-
     if message.content.startswith('!'):
         contents = message.content.split()
+        contents[0] = contents[0].lower()
         if contents[0] not in botCommands.CommandTable:
             msg = 'Looks like you\'re dumb...that command no goo'.format(message)
             await message.channel.send(msg)
@@ -51,47 +54,16 @@ async def on_message(message):
             if botCommands.CommandTable[contents[0]][1] == True and str(message.author) not in sheetCache.OfficerTable:
                 msg = 'This command does exist but you are not an Officer'.format(message)
                 await message.channel.send(msg)
-            if len(contents) < botCommands.CommandTable[contents[0]][2] or len(contents) > botCommands.CommandTable[contents[0]][2]:
+            if botCommands.CommandTable[contents[0]][2] == None or len(contents) == botCommands.CommandTable[contents[0]][2] :
+                msg = 'Running ' + contents[0] + ' now...'.format(message)
+                await message.channel.send(msg)
+                code = botCommands.CommandTable[contents[0]][0](message)
+                msg = str(code) + ' : ' + statusCheck(code).format(message)
+                await message.channel.send(msg.format(message))
+            elif len(contents) < botCommands.CommandTable[contents[0]][2] or len(contents) > botCommands.CommandTable[contents[0]][2]:
                 msg = 'This is the wrong amount of arguments for that command\n'
                 msg = msg + 'This command takes ' + str(botCommands.CommandTable[contents[0]][2] - 1) + ' additional arguments'
                 await message.channel.send(msg.format(message))
-            else:
-                msg = 'Running ' + contents[0] + ' now...'.format(message)
-                await message.channel.send(msg)
-                botCommands.CommandTable[contents[0]][0](*contents[1:])
-
-    '''
-    if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await message.channel.send(msg)
-    if message.content.startswith('!printshit'):
-        keys = ''
-        for key in SheetCommands.sheetCache.OfficerTable:
-            keys = keys + ' ' + key + '\n'
-        msg = 'Yeah, {0.author.mention} - I print \n' + keys + ''
-        msg = msg.format(message)
-        await message.channel.send(msg)
-    if message.content.startswith('!secretshit'):
-        msg = 'Yeah, {0.author.mention} - I print...secretly tee hee '
-        print(SheetCommands.sheetCache.PlayerTable.keys())
-        msg = msg.format(message)
-        await message.channel.send(msg)
-    if message.content.startswith("!refresh"):
-        msg = 'Refreshing...'.format(message)
-        #msg = 'this command broke right nao'.format(msg)
-        await message.channel.send(msg)
-        sheetCache.Refresh()
-        
-    if message.content.startswith('!tithe'):
-        author = str(message.author)
-        if sheetCache.OfficerTable.__contains__(author):
-            msg = SheetCommands.Tithe().format(message)
-            await message.channel.send(msg)
-        else:
-            msg = 'Nah fam, you are not allowed'.format(message)
-            await message.channel.send(msg)
-'''
-
 
 @dClient.event
 async def on_ready():
@@ -99,6 +71,8 @@ async def on_ready():
     print(dClient.user.name)
     print(dClient.user.id)
     print('------')
+    #guild = discord.utils.get(dClient.guilds, name='Deja Vu - Classic')
+    #print(guild.voice_channels[1])
     await dClient.change_presence(activity=discord.Game(name="broken af right"))
 
 dClient.run(token)

@@ -25,12 +25,16 @@ class SheetCache:
             self.OfficerTable.update({lists[6]: lists})
         for lists in AllSheetData:
             self.PlayerTable.update({lists[1]: lists})
-        self.PlayerTable.pop('Discord ID')
-        self.OfficerTable.pop('Discord ID')
+        #self.PlayerTable.pop('Discord ID')
+        #self.OfficerTable.pop('Discord ID')
 
-    def Refresh(self):
+    def Refresh(self, discordObj):
         print("=== REFRESHING STORE VALUES FROM SHEETS ===")
         self.dkpConfig = DKP_Vars(self.gClient)
+
+        self.PlayerTable = dict()
+        self.OfficerTable = dict()
+
         AllSheetData = self.GuildRoster.get_all_values()
         AllOfficersData = self.OfficerTab.get_all_values()
 
@@ -39,6 +43,7 @@ class SheetCache:
 
         for lists in AllSheetData:
             self.PlayerTable.update({lists[1]: lists})
+        return 201
 
         #self.PlayerTable.pop('Discord ID')
         #self.OfficerTable.pop('Discord ID')

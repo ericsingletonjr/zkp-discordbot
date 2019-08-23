@@ -18,10 +18,18 @@ class DiscordCommands:
 
         # Hard coding for now - will need to experiment with
         # a more clean approach in the future
-        self.CommandTable.update({"!refresh": [sheetCache.Refresh, True, 1]})
-        self.CommandTable.update({"!tithe" : [sheetCommands.Tithe, True, 1]})
-        self.CommandTable.update({"!simple" : [sheetCommands.simple, True, 1]})
-        self.CommandTable.update({"!addmember" : [sheetCommands.AddMember, True, 2]})
-        #self.CommandTable.update({"!cancelauction" : [sheetCommands.CancelAuction, True, 1]})
 
-        
+        # Officer commands
+        self.CommandTable.update({"!refresh": [sheetCache.Refresh, True, None]})
+        self.CommandTable.update({"!tithe" : [sheetCommands.Tithe, True, None]})
+        self.CommandTable.update({"!simple" : [sheetCommands.simple, True, None]})
+        self.CommandTable.update({"!addmember" : [sheetCommands.AddMember, True, None]})
+        self.CommandTable.update({"!editmember" : [sheetCommands.EditMember, True, 4]})
+        self.CommandTable.update({"!auction" : [sheetCommands.Auction, True, None]})
+        self.CommandTable.update({"!cancelauction" : [sheetCommands.CancelAuction, True, None]})
+
+        # Err'body commands
+        self.CommandTable.update({"!addself" : [sheetCommands.AddSelf, False, 3]})
+        self.CommandTable.update({"!bid" : [sheetCommands.Bid, False, 2]})
+        self.CommandTable.update({"!cancelbid" : [sheetCommands.CancelBid, False, None]})
+        self.CommandTable.update({"!minbid" : [sheetCommands.MinBid, False, None]})
